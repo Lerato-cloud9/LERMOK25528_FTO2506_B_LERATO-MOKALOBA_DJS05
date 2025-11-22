@@ -74,3 +74,18 @@ useEffect(() => {                         // Function that gets all the data for
     if (!seconds) return '45 min';            // default value if data is missing
     const minutes = Math.floor(seconds / 60); // convert seconds to minutes
   };
+
+/**
+ * Converts a date string into a readable format like "Jan 1, 2024"
+ * If the date string is missing, it creates a default date using the index
+ */
+  const formatEpisodeDate = (dateString, index) => {
+    if (!dateString) {
+    // Use a default date: Jan 1, 2024, Jan 2, etc.
+      const date = new Date(2024, 0, index + 1);
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+    // Convert the real date string to a readable format
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  };

@@ -209,3 +209,32 @@ return (
               ))}
             </select>
           </div>
+
+          {/* Show details for the currently selected season */}
+          {currentSeason && (
+            <>
+              <div className={styles.seasonCard}>
+
+                {/* Season cover image */}
+                <div className={styles.seasonCover}>
+                  <img src={currentSeason.image} alt={currentSeason.title} />
+                  <span className={styles.seasonLabel}>
+                    Season {currentSeason.season} Cover
+                  </span>
+                </div>
+
+                {/* Season information */}
+                <div className={styles.seasonInfo}>
+                  <h3>{currentSeason.title}</h3>
+
+                  {/* Short description or subtitle for the season */}
+                  <p className={styles.seasonSubtitle}>
+                    Introduction to the basics and foundational concepts
+                  </p>
+
+                  {/* Meta info: number of episodes and release year */}
+                  <p className={styles.seasonMeta}>
+                    {currentSeason.episodes.length} Episodes • Released 2024
+                  </p>
+                </div>
+              </div>

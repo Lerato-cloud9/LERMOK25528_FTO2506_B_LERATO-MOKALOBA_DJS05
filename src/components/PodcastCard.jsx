@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { formatDate } from "../utils/formatDate";
 import styles from "./PodcastCard.module.css";
 

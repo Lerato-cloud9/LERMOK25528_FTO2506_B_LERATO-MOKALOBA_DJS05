@@ -48,7 +48,7 @@ Never stuck on blank page
 ⚡ Vite
 
 🚀 How to Run
-bashnpm install
+Terminal run-npm install
 npm run dev
 # Open http://localhost:5173
 

@@ -56,3 +56,23 @@
   margin-bottom: 24px;
   font-size: 15px;
 }
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.meta h3 {
+  font-size: 11px;
+  font-weight: 700;
+  color: #999;
+  letter-spacing: 1px;
+  margin: 0 0 8px 0;
+}
+
+.meta p {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+}

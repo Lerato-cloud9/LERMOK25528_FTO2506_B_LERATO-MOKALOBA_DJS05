@@ -238,3 +238,40 @@ return (
                   </p>
                 </div>
               </div>
+
+              {/* List of all episodes for the selected season */}
+              <div className={styles.episodes}>
+                {currentSeason.episodes.map((ep, index) => (
+                  <div key={ep.episode} className={styles.episode}>
+
+                    {/* Show the season number */}
+                    <div className={styles.epNum}>S{currentSeason.season}</div>
+
+                    {/* Episode details */}
+                    <div className={styles.epContent}>
+                      <h4>
+                        Episode {ep.episode}: {ep.title}
+                      </h4>
+
+                      {/* Short description (max 150 characters) */}
+                      <p className={styles.epDescription}>
+                        {ep.description?.substring(0, 150) || 'No description available'}...
+                      </p>
+
+                      {/* Episode meta info: duration and release date */}
+                      <div className={styles.epMeta}>
+                        <span>{formatDuration(ep.duration)}</span>
+                        <span>•</span>
+                        <span>{formatEpisodeDate(ep.date, index)}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}

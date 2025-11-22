@@ -18,6 +18,9 @@ import styles from "./PodcastCard.module.css";
  * @returns {JSX.Element} The rendered podcast card component.
  */
 export default function PodcastCard({ podcast, genres }) {
+  // useNavigate lets us move to another page when the card is clicked
+  const navigate = useNavigate();
+
   const genreSpans = podcast.genres.map((id) => {
     const match = genres.find((genre) => genre.id === id);
     return (
@@ -27,13 +30,24 @@ export default function PodcastCard({ podcast, genres }) {
     );
   });
 
-  return (
-    <div className={styles.card}>
-      <img src={podcast.image} alt={podcast.title} />
+   // When the card is clicked, go to the show's detail page using its ID.
+  const handleClick = () => {
+    navigate(`/show/${podcast.id}`);
+  };
 
+  return (
+    // Whole card is clickable so the user can open the show details
+    <div className={styles.card} onClick={handleClick} style={{ cursor: 'pointer' }}>
+      <img src={podcast.image} alt={podcast.title} />
       <h3>{podcast.title}</h3>
+      
+      {/* Show how many seasons the podcast has */}
       <p className={styles.seasons}>{podcast.seasons} seasons</p>
+
+      {/* Show all the genres as small tags */}
       <div className={styles.tags}>{genreSpans}</div>
+
+      {/* Show when the podcast was last updated */}
       <p className={styles.updatedText}>
         Updated {formatDate(podcast.updated)}
       </p>

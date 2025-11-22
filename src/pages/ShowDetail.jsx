@@ -22,3 +22,16 @@ export default function ShowDetail() {
   const [loading, setLoading] = useState(true);         // For showing a loading screen while fetching data
   const [error, setError] = useState(null);             // Store any error message if something goes wrong
   const [selectedSeason, setSelectedSeason] = useState(1); // Tracks which season the user picked (default is season 1)
+
+useEffect(() => {                         // Function that gets all the data for this show
+    const fetchShowData = async () => {   // Start loading and clear any old errors
+      setLoading(true);
+      setError(null);
+      
+      try {
+        // Fetch preview data (which includes genres and description)
+        const previewResponse = await fetch('https://podcast-api.netlify.app/shows');
+        if (!previewResponse.ok) throw new Error('Failed to fetch shows');  // Check if the request worked
+        const previews = await previewResponse.json();                      // Change the response into usable JSON
+        const preview = previews.find(p => p.id === id);                    // Find the preview for the show that matches the id in the URL
+        setPreviewData(preview);                                            // Save the preview data

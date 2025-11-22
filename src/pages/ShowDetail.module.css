@@ -227,3 +227,34 @@
   flex-shrink: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
+
+.epContent {
+  flex: 1;
+}
+
+.epContent h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #1a1a1a;
+}
+
+.epDescription {
+  margin: 0 0 8px 0;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.epMeta {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+  color: #888;
+  align-items: center;
+  font-weight: 500;
+}
+
+.epMeta span:nth-child(2) {
+  color: #d0d0d0;
+}

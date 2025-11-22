@@ -67,13 +67,14 @@ useEffect(() => {                         // Function that gets all the data for
     9: 'Kids and Family'
   };
 
-  /**
-   * Formats duration from seconds to "X min" format
-   */
-  const formatDuration = (seconds) => {
-    if (!seconds) return '45 min';            // default value if data is missing
-    const minutes = Math.floor(seconds / 60); // convert seconds to minutes
-  };
+/**
+ * Formats duration from seconds to "X min" format
+ */
+const formatDuration = (seconds) => {
+  if (!seconds) return '45 min';            // default value if data is missing
+  const minutes = Math.floor(seconds / 60); // convert seconds to minutes
+  return `${minutes} min`;                  // return the calculated minutes
+};
 
 /**
  * Converts a date string into a readable format like "Jan 1, 2024"

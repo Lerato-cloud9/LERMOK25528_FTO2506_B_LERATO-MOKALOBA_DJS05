@@ -205,3 +205,10 @@
   border: 1px solid #e8e8e8;
   transition: all 0.3s;
 }
+
+.episode:hover {
+  background: white;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border-color: #d0d0d0;
+  transform: translateY(-2px);
+}

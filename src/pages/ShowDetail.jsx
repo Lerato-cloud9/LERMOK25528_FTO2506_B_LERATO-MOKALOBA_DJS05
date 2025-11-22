@@ -1,4 +1,3 @@
-
 // useParams = get the id from the URL
 // useNavigate = move between pages
 // useLocation = get extra data from the previous page
@@ -19,12 +18,29 @@ export default function ShowDetail() {
   const location = useLocation();       // Gets any extra data sent from the previous page 
   
   const [showData, setShowData] = useState(null);       // Store the full show info from the API
-  const [previewData, setPreviewData] = useState(null); // Store the preview data that was passed from PodcastCard
-  const [error, setError] = useState(null);             // For showing a loading screen while fetching data
+  const [previewData, setPreviewData] = useState(null); // Store the preview data (has genres)
+  const [loading, setLoading] = useState(true);         // ← THIS WAS MISSING! Shows loading screen
+  const [error, setError] = useState(null);             // Stores error messages if fetch fails
   const [selectedSeason, setSelectedSeason] = useState(1); // Tracks which season the user picked (default is season 1)
 
-  useEffect(() => {                       // Function that gets all the data for this show
-    const fetchShowData = async () => {   // Start loading and clear any old errors
+  // Mapping of genre IDs to their names
+  // This helps display the genre name instead of just the number
+  const genreMap = {
+    1: 'Personal Growth',
+    2: 'Investigative Journalism',
+    3: 'History',
+    4: 'Comedy',
+    5: 'Entertainment',
+    6: 'Business',
+    7: 'Fiction',
+    8: 'News',
+    9: 'Kids and Family'
+  };
+
+  // Function that gets all the data for this show
+  useEffect(() => {
+    const fetchShowData = async () => {
+      // Start loading and clear any old errors
       setLoading(true); 
       setError(null);
       
@@ -49,23 +65,8 @@ export default function ShowDetail() {
       }
     };
 
-// Mapping of genre IDs to their names
-// This helps display the genre name instead of just the numbe
-
-    if (id) fetchShowData();
-  }, [id]);
-
-  const genreMap = {
-    1: 'Personal Growth',
-    2: 'Investigative Journalism',
-    3: 'History',
-    4: 'Comedy',
-    5: 'Entertainment',
-    6: 'Business',
-    7: 'Fiction',
-    8: 'News',
-    9: 'Kids and Family'
-  };
+    if (id) fetchShowData();       // Only fetch if we have an id
+  }, [id]);                        // Re-run if the id changes
 
   /**
    * Formats duration from seconds to "X min" format
@@ -76,13 +77,13 @@ export default function ShowDetail() {
     return `${minutes} min`;                  // return the calculated minutes
   };
 
-/**
- * Converts a date string into a readable format like "Jan 1, 2024"
- * If the date string is missing, it creates a default date using the index
- */
+  /**
+   * Converts a date string into a readable format like "Jan 1, 2024"
+   * If the date string is missing, it creates a default date using the index
+   */
   const formatEpisodeDate = (dateString, index) => {
     if (!dateString) {
-    // Use a default date: Jan 1, 2024, Jan 2, etc.
+      // Use a default date: Jan 1, 2024, Jan 2, etc.
       const date = new Date(2024, 0, index + 1);
       return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     }
@@ -112,7 +113,8 @@ export default function ShowDetail() {
         <div style={{ textAlign: 'center', padding: '60px 20px' }}>
           <h2>⚠️ Error Loading Show</h2>
           <p>{error || 'Show not found'}</p>
-          <button onClick={() => navigate('/')} style={{ padding: '10px 20px', marginTop: '20px' }}> {/* Button to go back to the homepage */}
+          {/* Button to go back to the homepage */}
+          <button onClick={() => navigate('/')} style={{ padding: '10px 20px', marginTop: '20px' }}>
             ← Back to Homepage
           </button>
         </div>
@@ -120,15 +122,19 @@ export default function ShowDetail() {
     );
   }
 
- // Get the names of all genres for this show using the genreMap
-// If a genre ID is not in the map, show "Genre {id}" as a fallback
+  // Get the names of all genres for this show using the genreMap
+  // If a genre ID is not in the map, show "Genre {id}" as a fallback
   const genreNames = previewData.genres?.map(id => genreMap[id] || `Genre ${id}`) || [];
-  const currentSeason = showData.seasons?.find(s => s.season === selectedSeason);                 // Find the currently selected season from the full show data
-  const totalEpisodes = showData.seasons?.reduce((total, s) => total + s.episodes.length, 0) || 0;// Count the total number of episodes across all seasons
+  
+  // Find the currently selected season from the full show data
+  const currentSeason = showData.seasons?.find(s => s.season === selectedSeason);
+  
+  // Count the total number of episodes across all seasons
+  const totalEpisodes = showData.seasons?.reduce((total, s) => total + s.episodes.length, 0) || 0;
 
   return (
     <>
-    {/* Page header */}
+      {/* Page header */}
       <Header />
 
       {/* Main page container */}
@@ -142,9 +148,10 @@ export default function ShowDetail() {
         {/* Show image and info section */}
         <div className={styles.header}>
           <img 
-          src={showData.image} 
-          alt={showData.title} 
-          className={styles.image} />
+            src={showData.image} 
+            alt={showData.title} 
+            className={styles.image} 
+          />
           
           <div className={styles.info}>
             <h1>{showData.title}</h1>
@@ -157,7 +164,7 @@ export default function ShowDetail() {
               <div>
                 <h3>GENRES</h3>
 
-            {/* Display all genre names as tags */}   
+                {/* Display all genre names as tags */}   
                 <div className={styles.genres}>
                   {genreNames.map((g, i) => (
                     <span key={i} className={styles.genreTag}>{g}</span>
@@ -165,7 +172,7 @@ export default function ShowDetail() {
                 </div>
               </div>
 
-            {/* Show the last updated date for the podcast */}
+              {/* Show the last updated date for the podcast */}
               <div>
                 <h3>LAST UPDATED</h3>
                 <p>{new Date(showData.updated).toLocaleDateString('en-US', { 
@@ -173,7 +180,7 @@ export default function ShowDetail() {
                 })}</p>
               </div>
 
-            {/* Display total seasons and total episodes */}
+              {/* Display total seasons and total episodes */}
               <div className={styles.metaRow}>
                 <div>
                   <h3>TOTAL SEASONS</h3>
@@ -191,74 +198,74 @@ export default function ShowDetail() {
         {/* Season selection section */}
         <div className={styles.seasons}>
 
-        {/* Header for the current season */}
+          {/* Header for the current season */}
           <div className={styles.seasonHeader}>
             <h2>Current Season</h2>
 
-        {/* Dropdown to select which season to view */}
+            {/* Dropdown to select which season to view */}
             <select 
               value={selectedSeason}   // show currently selected season
               onChange={(e) => setSelectedSeason(parseInt(e.target.value))} // update selected season
               className={styles.seasonSelect}
             >
-        {/* Create an option for each season */}
-            {showData.seasons.map((season) => (
-            <option key={season.season} value={season.season}>
-              Season {season.season}
+              {/* Create an option for each season */}
+              {showData.seasons.map((season) => (
+                <option key={season.season} value={season.season}>
+                  Season {season.season}
                 </option>
               ))}
             </select>
           </div>
 
-         {/* Show details for the currently selected season */}
+          {/* Show details for the currently selected season */}
           {currentSeason && (
             <>
               <div className={styles.seasonCard}>
 
-             {/* Show details for the currently selected season */}
+                {/* Season cover image */}
                 <div className={styles.seasonCover}>
                   <img src={currentSeason.image} alt={currentSeason.title} />
                   <span className={styles.seasonLabel}>
                     Season {currentSeason.season} Cover
-                    </span>
+                  </span>
                 </div>
 
-            {/* Season information */}
+                {/* Season information */}
                 <div className={styles.seasonInfo}>
                   <h3>{currentSeason.title}</h3>
 
-            {/* Short description or subtitle for the season */}
+                  {/* Short description or subtitle for the season */}
                   <p className={styles.seasonSubtitle}>
                     Introduction to the basics and foundational concepts
-                    </p>
+                  </p>
 
-            {/* Meta info: number of episodes and release year */}        
-             <p className={styles.seasonMeta}>
-               {currentSeason.episodes.length} Episodes • Released 2024
-             </p>
-           </div>
-        </div>
+                  {/* Meta info: number of episodes and release year */}        
+                  <p className={styles.seasonMeta}>
+                    {currentSeason.episodes.length} Episodes • Released 2024
+                  </p>
+                </div>
+              </div>
 
-            {/* List of all episodes for the selected season */}
+              {/* List of all episodes for the selected season */}
               <div className={styles.episodes}>
                 {currentSeason.episodes.map((ep, index) => (
                   <div key={ep.episode} className={styles.episode}>
 
-            {/* Show the season number */}
-                <div className={styles.epNum}>S{currentSeason.season}</div>
+                    {/* Show the season number */}
+                    <div className={styles.epNum}>S{currentSeason.season}</div>
 
-            {/* Episode details */}    
-                <div className={styles.epContent}>
-                <h4>
-                  Episode {ep.episode}: {ep.title}
-                </h4>
+                    {/* Episode details */}    
+                    <div className={styles.epContent}>
+                      <h4>
+                        Episode {ep.episode}: {ep.title}
+                      </h4>
 
-                    {/* Short description (max 150 characters) */}
+                      {/* Short description (max 150 characters) */}
                       <p className={styles.epDescription}>
                         {ep.description?.substring(0, 150) || 'No description available'}...
                       </p>
 
-                    {/* Episode meta info: duration and release date */}
+                      {/* Episode meta info: duration and release date */}
                       <div className={styles.epMeta}>
                         <span>{formatDuration(ep.duration)}</span>
                         <span>•</span>

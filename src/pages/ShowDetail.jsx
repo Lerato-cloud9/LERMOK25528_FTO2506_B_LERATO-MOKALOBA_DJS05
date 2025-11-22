@@ -35,3 +35,16 @@ useEffect(() => {                         // Function that gets all the data for
         const previews = await previewResponse.json();                      // Change the response into usable JSON
         const preview = previews.find(p => p.id === id);                    // Find the preview for the show that matches the id in the URL
         setPreviewData(preview);                                            // Save the preview data
+
+        // Fetch full show data (this includes all seasons and episodes)
+        const showResponse = await fetch(`https://podcast-api.netlify.app/id/${id}`);
+        if (!showResponse.ok) throw new Error('Failed to fetch show details');  // Check if the request worked
+        const fullData = await showResponse.json();                             // Convert the response to JSON
+        setShowData(fullData);    // Save the full show data in state
+        setSelectedSeason(1);     // Start by showing season 1
+      } catch (err) {             // If anything goes wrong, show the error
+        setError(err.message);
+      } finally {
+        setLoading(false);       // Stop the loading screen
+      }
+    };

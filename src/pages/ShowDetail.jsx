@@ -118,3 +118,9 @@ useEffect(() => {                         // Function that gets all the data for
       </>
     );
   }
+
+// Get the names of all genres for this show using the genreMap
+// If a genre ID is not in the map, show "Genre {id}" as a fallbac
+  const genreNames = previewData.genres?.map(id => genreMap[id] || `Genre ${id}`) || [];
+  const currentSeason = showData.seasons?.find(s => s.season === selectedSeason);                   // Find the currently selected season from the full show data
+  const totalEpisodes = showData.seasons?.reduce((total, s) => total + s.episodes.length, 0) || 0; // Count the total number of episodes across all seasons

@@ -43,3 +43,9 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
+.info h1 {
+  margin: 0 0 16px 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+}

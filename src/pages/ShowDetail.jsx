@@ -187,3 +187,25 @@ return (
                   <p>{totalEpisodes} Episodes</p>
                 </div>
               </div>
+
+        {/* Season selection section */}
+        <div className={styles.seasons}>
+
+          {/* Header for the current season */}
+          <div className={styles.seasonHeader}>
+            <h2>Current Season</h2>
+
+            {/* Dropdown to select which season to view */}
+            <select 
+              value={selectedSeason} // show currently selected season
+              onChange={(e) => setSelectedSeason(parseInt(e.target.value))} // update selected season
+              className={styles.seasonSelect}
+            >
+              {/* Create an option for each season */}
+              {showData.seasons.map((season) => (
+                <option key={season.season} value={season.season}>
+                  Season {season.season}
+                </option>
+              ))}
+            </select>
+          </div>

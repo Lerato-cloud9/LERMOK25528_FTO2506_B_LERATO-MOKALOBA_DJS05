@@ -165,3 +165,25 @@ return (
                 ))}
               </div>
             </div>
+
+              {/* Show the last updated date for the podcast */}
+              <div>
+                <h3>LAST UPDATED</h3>
+                <p>
+                  {new Date(showData.updated).toLocaleDateString('en-US', { 
+                    year: 'numeric', month: 'long', day: 'numeric' 
+                  })}
+                </p>
+              </div>
+
+              {/* Display total seasons and total episodes */}
+              <div className={styles.metaRow}>
+                <div>
+                  <h3>TOTAL SEASONS</h3>
+                  <p>{showData.seasons.length} Seasons</p>
+                </div>
+                <div>
+                  <h3>TOTAL EPISODES</h3>
+                  <p>{totalEpisodes} Episodes</p>
+                </div>
+              </div>

@@ -49,3 +49,10 @@
   font-weight: 700;
   color: #1a1a1a;
 }
+
+.description {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  font-size: 15px;
+}

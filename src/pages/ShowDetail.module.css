@@ -258,3 +258,19 @@
 .epMeta span:nth-child(2) {
   color: #d0d0d0;
 }
+
+@media (max-width: 768px) {
+  .header {
+    grid-template-columns: 1fr;
+    padding: 24px;
+  }
+  
+  .seasonCard {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .episode {
+    flex-direction: column;
+  }
+}

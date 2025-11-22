@@ -89,3 +89,32 @@ useEffect(() => {                         // Function that gets all the data for
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   };
+
+  // Show a loading screen while fetching data
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <div style={{ textAlign: 'center', padding: '60px 20px' }}>
+          <div className="spinner"></div>
+          <p>Loading show details...</p>
+        </div>
+      </>
+    );
+  }
+
+  // Show an error message if something went wrong or data is missing
+  if (error || !showData || !previewData) {
+    return (
+      <>
+        <Header />
+        <div style={{ textAlign: 'center', padding: '60px 20px' }}>
+          <h2>⚠️ Error Loading Show</h2>
+          <p>{error || 'Show not found'}</p>
+          <button onClick={() => navigate('/')} style={{ padding: '10px 20px', marginTop: '20px' }}> {/* Button to go back to the homepage */}
+            ← Back to Homepage
+          </button>
+        </div>
+      </>
+    );
+  }

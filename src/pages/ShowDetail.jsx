@@ -19,7 +19,7 @@ export default function ShowDetail() {
   
   const [showData, setShowData] = useState(null);       // Store the full show info from the API
   const [previewData, setPreviewData] = useState(null); // Store the preview data (has genres)
-  const [loading, setLoading] = useState(true);         // ← THIS WAS MISSING! Shows loading screen
+  const [loading, setLoading] = useState(true);         // Shows loading screen
   const [error, setError] = useState(null);             // Stores error messages if fetch fails
   const [selectedSeason, setSelectedSeason] = useState(1); // Tracks which season the user picked (default is season 1)
 

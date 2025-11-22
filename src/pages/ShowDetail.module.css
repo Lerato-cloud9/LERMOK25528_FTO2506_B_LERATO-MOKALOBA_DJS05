@@ -162,3 +162,17 @@
   margin-bottom: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
+
+.seasonLabel {
+  font-size: 12px;
+  color: #777;
+  display: block;
+  font-weight: 600;
+}
+
+.seasonInfo h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #333;
+}

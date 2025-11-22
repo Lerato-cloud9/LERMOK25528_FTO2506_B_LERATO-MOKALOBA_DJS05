@@ -124,3 +124,44 @@ useEffect(() => {                         // Function that gets all the data for
   const genreNames = previewData.genres?.map(id => genreMap[id] || `Genre ${id}`) || [];
   const currentSeason = showData.seasons?.find(s => s.season === selectedSeason);                   // Find the currently selected season from the full show data
   const totalEpisodes = showData.seasons?.reduce((total, s) => total + s.episodes.length, 0) || 0; // Count the total number of episodes across all seasons
+
+return (
+  <>
+    {/* Page header */}
+    <Header />
+
+    {/* Main page container */}
+    <div className={styles.page}>
+
+      {/* Back button to go to the previous page */}
+      <button className={styles.backBtn} onClick={() => navigate(-1)}>
+        ← Back
+      </button>
+
+      {/* Show image and info section */}
+      <div className={styles.header}>
+        <img 
+          src={showData.image} 
+          alt={showData.title} 
+          className={styles.image} 
+        />
+
+        {/* Info about the show */}
+        <div className={styles.info}>
+          <h1>{showData.title}</h1>
+
+          {/* Description comes from the preview data */}
+          <p className={styles.description}>{previewData.description}</p>
+
+          {/* Meta information like genres */}
+          <div className={styles.meta}>
+            <div>
+              <h3>GENRES</h3>
+
+              {/* Display all genre names as tags */}
+              <div className={styles.genres}>
+                {genreNames.map((g, i) => (
+                  <span key={i} className={styles.genreTag}>{g}</span>
+                ))}
+              </div>
+            </div>
